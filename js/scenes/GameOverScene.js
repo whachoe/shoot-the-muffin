@@ -24,8 +24,19 @@ var GameOverScene = enchant.Class.create(enchant.Scene, {
 
         game.assets['sounds/johnson-long-version.mp3'].play();
 
-        var name = window.prompt('Highscore!!! Your name:');
-        $.get('/highscore.php?name='+encodeURIComponent(name)+'&score='+encodeURIComponent(scoreLabel.score.toString()));
+	if (scoreLabel.score >= low_score ) {
+        	var name = window.prompt('Highscore!!! Your name:');
+        	$.get('highscore.php?name='+encodeURIComponent(name)+'&score='+encodeURIComponent(scoreLabel.score.toString()))
+		.always(function () {
+		$.getJSON('js/highscores.json', function (data) {
+		    $("#highscores_inner").empty();
+		    $.each(data.scores, function (key, score) {
+                    $("#highscores_inner").append('<li><span style="width: 80px">'+score.name+'</span><span style="margin-left: 20px; width: 80px">'+score.score+'</span></li>');
+            	    });
+                });
+        	});
+
+	}
 
         // Space also starts the game
 //        this.on(enchant.Event.A_BUTTON_DOWN, function(){

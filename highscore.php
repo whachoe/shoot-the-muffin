@@ -5,11 +5,15 @@ $scores = json_decode($scores, true);
 
 if (isset($_REQUEST['name']) && isset($_REQUEST['score'])) {
     $index = 0;
-    while ($scores['scores'][$index]['score'] > $_REQUEST['score']) {
+    while ($index < count($scores['scores']) && $scores['scores'][$index]['score'] > $_REQUEST['score']) {
         $index++;
     }
 
-    array_splice($scores['scores'], $index, 0, [array('name' => $_REQUEST['name'], 'score' => $_REQUEST['score'])]);
+    if ($index == count($scores['scores'])) 
+	$scores['scores'][] = array('name' => $_REQUEST['name'], 'score' => $_REQUEST['score']);
+    else 
+    	array_splice($scores['scores'], $index, 0, [array('name' => $_REQUEST['name'], 'score' => $_REQUEST['score'])]);
+
     file_put_contents('js/highscores.json', json_encode($scores));
 } 
 

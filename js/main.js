@@ -1,3 +1,4 @@
+var low_score = 0;
 
 enchant();
 window.onload = function() {
@@ -9,13 +10,13 @@ window.onload = function() {
         'img/muffins/muffin5.png' 
     ]
 
-    var low_score = 0;
     $(document).ready(function () {
-        $.getJSON('/js/highscores.json', function (data) {
+        $.getJSON('js/highscores.json', function (data) {
             $.each(data.scores, function (key, score) {
                 $("#highscores_inner").append('<li><span style="width: 80px">'+score.name+'</span><span style="margin-left: 20px; width: 80px">'+score.score+'</span></li>');        
                 low_score = score.score;
             });
+	    if (data.scores.length < 10) low_score = 0;
         });
     });
 
