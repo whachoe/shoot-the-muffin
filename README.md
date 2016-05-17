@@ -1,4 +1,4 @@
-A-stad Shooter
+Rombit Shooter
 ==============
 
 ## Arcade style space shooter clone
